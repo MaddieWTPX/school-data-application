@@ -44,6 +44,7 @@ namespace SchoolDataApplication.Models
         //
         // Navigation Properties
 
+        [DisplayName("User Type")]
         public int? UserTypeId { get; set; }
         public UserType? UserType { get; set; }
 
