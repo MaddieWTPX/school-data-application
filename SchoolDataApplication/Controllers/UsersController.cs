@@ -48,28 +48,46 @@ namespace SchoolDataApplication.Controllers
 
         // GET: Users/Create
         public IActionResult Create()
-        { 
-            ViewData["UserTypeId"] = new SelectList(_context.UserTypes,
-                                                    "UserTypeId", "Name");
-            return View();
+        {
+          //  ViewData["UserTypeId"] = new SelectList(_context.UserTypes,
+          //                                          "UserTypeId", "Name");
+          //  return View();
+             UserCreateViewModel userCreateViewModel = new UserCreateViewModel()
+            {
+                User = new User(),
+                Title = "Create user",
+                UserTypeList = new SelectList(_context.UserTypes, "UserTypeId", "Name"),
+                SchoolList = new SelectList(_context.Users, "School", "School"),
+                YearGroupList = new SelectList(_context.Users, "YearGroup", "YearGroup")
+            };
+            return View(userCreateViewModel);
         }
 
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,School,DateOfBirth,YearGroup,UserTypeId")] User user)
+        public async Task<IActionResult> Create(User user)
         {// TODO create view models per page
-
+            UserCreateViewModel userCreateViewModel = new UserCreateViewModel()
+            {
+                User = user,
+                Title = "Create user",
+                UserTypeList = new SelectList(_context.UserTypes, "UserTypeId", "Name", user.UserTypeId),
+                SchoolList = new SelectList(_context.Users, "School", "School"),
+                YearGroupList = new SelectList(_context.Users, "YearGroup", "YearGroup")
+            };
             if (ModelState.IsValid)
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+               return RedirectToAction(nameof(Index));
             }
-            
-            ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "UserTypeId", user.UserTypeId);
-            return View(user);
-        }
+
+            return View(userCreateViewModel);
+
+    }
+
+        
 
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)

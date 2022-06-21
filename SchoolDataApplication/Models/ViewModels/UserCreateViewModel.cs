@@ -9,8 +9,9 @@ namespace SchoolDataApplication.Models.ViewModels
 
         }
         public User User { get; set; }
-        public IEnumerable<SelectListItem> UserTypesNames { get; set; }  
-        public string UserTypeName { get; set; }
+        public SelectList UserTypeList { get; set; }
+        public SelectList SchoolList { get; set; }
+        public SelectList YearGroupList { get; set; }
 
         public string Title { get; set; }
     }

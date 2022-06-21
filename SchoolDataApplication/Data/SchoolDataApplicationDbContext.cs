@@ -46,6 +46,11 @@ namespace SchoolDataApplication.Data
                 new SchoolClass { ClassId = 7, ClassName = "Literature", ClassDescription = "Humanities" }
                 );
 
+            modelBuilder.Entity<User>()
+                .Property(s => s.School)
+                .HasDefaultValue("TPXSchool");
+
+
         }
 
         public DbSet<User> Users { get; set; }
