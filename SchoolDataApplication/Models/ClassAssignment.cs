@@ -9,6 +9,8 @@ namespace SchoolDataApplication.Models
         
         public int ClassId { get; set; }
 
+        public int SchoolId { get; set; }
+
 
         // 
         // Navigation Properties

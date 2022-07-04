@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolDataApplication.Data;
 
@@ -11,9 +12,10 @@ using SchoolDataApplication.Data;
 namespace SchoolDataApplication.Migrations
 {
     [DbContext(typeof(SchoolDataApplicationDbContext))]
-    partial class SchoolDataApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220704102829_UpdateUserSeedData")]
+    partial class UpdateUserSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

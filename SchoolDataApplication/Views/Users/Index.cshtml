@@ -4,62 +4,48 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>User List</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create User</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.School)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.YearGroup)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserType)
-            </th>
-            <th></th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>School Name</th>
+            <th>User Type</th>
+            <th>Year Group</th>
+            <th>Date Of Birth</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.School)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YearGroup)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserType.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <label>@item.FirstName</label>
+                </td>
+                <td>
+                    <label>@item.LastName</label>
+                </td>
+                <td>
+                    <label>@item.School.Name</label>
+                </td>
+                <td>
+                    <label>@item.UserType.Name</label>
+                </td>
+                <td>
+                    <label>@item.YearGroup?.Name</label>
+                </td>
+                <td>
+                    <label>@item?.DateOfBirth</label>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.UserId">Details</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

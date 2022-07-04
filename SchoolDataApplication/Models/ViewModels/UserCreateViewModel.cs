@@ -13,6 +13,5 @@ namespace SchoolDataApplication.Models.ViewModels
         public SelectList SchoolList { get; set; }
         public SelectList YearGroupList { get; set; }
 
-        public string Title { get; set; }
     }
 }

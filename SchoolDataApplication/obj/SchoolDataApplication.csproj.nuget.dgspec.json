@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Madeleine Williams\\Development\\SchoolDataApplication\\SchoolDataApplication\\SchoolDataApplication.csproj": {}
+    "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Madeleine Williams\\Development\\SchoolDataApplication\\SchoolDataApplication\\SchoolDataApplication.csproj": {
+    "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Madeleine Williams\\Development\\SchoolDataApplication\\SchoolDataApplication\\SchoolDataApplication.csproj",
+        "projectUniqueName": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj",
         "projectName": "SchoolDataApplication",
-        "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolDataApplication\\SchoolDataApplication\\SchoolDataApplication.csproj",
+        "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj",
         "packagesPath": "C:\\Users\\Madeleine Williams\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolDataApplication\\SchoolDataApplication\\obj\\",
+        "outputPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Madeleine Williams\\AppData\\Roaming\\NuGet\\NuGet.Config",

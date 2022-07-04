@@ -23,7 +23,10 @@ namespace SchoolDataApplication.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            var schoolDataApplicationDbContext = _context.Users.Include(u => u.UserType);
+            var schoolDataApplicationDbContext = _context.Users
+                .Include(u => u.UserType)
+                .Include(u => u.School)
+                .Include(u => u.YearGroup);
             return View(await schoolDataApplicationDbContext.ToListAsync());
         }
 
@@ -35,9 +38,13 @@ namespace SchoolDataApplication.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
-                .Include(u => u.UserType)
-                .FirstOrDefaultAsync(m => m.UserId == id);
+            //var user = await _context.Users
+            //    .Include(u => u.UserType).Include(u => u.School).Include(u => u.YearGroup)
+            //    .FirstOrDefaultAsync(m => m.UserId == id);
+
+
+            var user = await _context.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).ToListAsync();
+
             if (user == null)
             {
                 return NotFound();
@@ -49,16 +56,13 @@ namespace SchoolDataApplication.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
-          //  ViewData["UserTypeId"] = new SelectList(_context.UserTypes,
-          //                                          "UserTypeId", "Name");
-          //  return View();
+
              UserCreateViewModel userCreateViewModel = new UserCreateViewModel()
             {
                 User = new User(),
-                Title = "Create user",
                 UserTypeList = new SelectList(_context.UserTypes, "UserTypeId", "Name"),
-                SchoolList = new SelectList(_context.Users, "School", "School"),
-                YearGroupList = new SelectList(_context.Users, "YearGroup", "YearGroup")
+                SchoolList = new SelectList(_context.Schools, "SchoolId", "Name"),
+                YearGroupList = new SelectList(_context.YearGroups, "YearGroupId", "Name")
             };
             return View(userCreateViewModel);
         }
@@ -71,10 +75,9 @@ namespace SchoolDataApplication.Controllers
             UserCreateViewModel userCreateViewModel = new UserCreateViewModel()
             {
                 User = user,
-                Title = "Create user",
                 UserTypeList = new SelectList(_context.UserTypes, "UserTypeId", "Name", user.UserTypeId),
-                SchoolList = new SelectList(_context.Users, "School", "School"),
-                YearGroupList = new SelectList(_context.Users, "YearGroup", "YearGroup")
+                SchoolList = new SelectList(_context.Schools, "SchoolId", "School", user.SchoolId),
+                YearGroupList = new SelectList(_context.YearGroups, "YearGroupId", "YearGroup", user.YearGroupId)
             };
             if (ModelState.IsValid)
             {
@@ -90,95 +93,95 @@ namespace SchoolDataApplication.Controllers
         
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Users == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null || _context.Users == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "UserTypeId", user.UserTypeId);
-            return View(user);
-        }
+        //    var user = await _context.Users.FindAsync(id);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "UserTypeId", user.UserTypeId);
+        //    return View(user);
+        //}
 
         // POST: Users/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,FirstName,LastName,School,DateOfBirth,YearGroup,UserTypeId")] User user)
-        {
-            if (id != user.UserId)
-            {
-                return NotFound();
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("UserId,FirstName,LastName,School,DateOfBirth,YearGroup,UserTypeId")] User user)
+        //{
+        //    if (id != user.UserId)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.UserId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "UserTypeId", user.UserTypeId);
-            return View(user);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(user);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!UserExists(user.UserId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "UserTypeId", user.UserTypeId);
+        //    return View(user);
+        //}
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Users == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null || _context.Users == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var user = await _context.Users
-                .Include(u => u.UserType)
-                .FirstOrDefaultAsync(m => m.UserId == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //    var user = await _context.Users
+        //        .Include(u => u.UserType)
+        //        .FirstOrDefaultAsync(m => m.UserId == id);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(user);
-        }
+        //    return View(user);
+        //}
 
         // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Users == null)
-            {
-                return Problem("Entity set 'SchoolDataApplicationDbContext.Users'  is null.");
-            }
-            var user = await _context.Users.FindAsync(id);
-            if (user != null)
-            {
-                _context.Users.Remove(user);
-            }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    if (_context.Users == null)
+        //    {
+        //        return Problem("Entity set 'SchoolDataApplicationDbContext.Users'  is null.");
+        //    }
+        //    var user = await _context.Users.FindAsync(id);
+        //    if (user != null)
+        //    {
+        //        _context.Users.Remove(user);
+        //    }
             
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool UserExists(int id)
         {

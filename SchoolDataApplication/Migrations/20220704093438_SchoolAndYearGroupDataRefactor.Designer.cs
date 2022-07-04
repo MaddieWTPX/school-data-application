@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolDataApplication.Data;
 
@@ -11,9 +12,10 @@ using SchoolDataApplication.Data;
 namespace SchoolDataApplication.Migrations
 {
     [DbContext(typeof(SchoolDataApplicationDbContext))]
-    partial class SchoolDataApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220704093438_SchoolAndYearGroupDataRefactor")]
+    partial class SchoolAndYearGroupDataRefactor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,7 +208,6 @@ namespace SchoolDataApplication.Migrations
                         new
                         {
                             UserId = 2,
-                            DateOfBirth = new DateTime(1996, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Madeleine",
                             LastName = "Williams",
                             SchoolId = 1,

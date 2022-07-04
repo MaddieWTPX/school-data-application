@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolDataApplication.Data;
 
@@ -11,9 +12,10 @@ using SchoolDataApplication.Data;
 namespace SchoolDataApplication.Migrations
 {
     [DbContext(typeof(SchoolDataApplicationDbContext))]
-    partial class SchoolDataApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220701170555_AddDBSetsForAdditionalProperties")]
+    partial class AddDBSetsForAdditionalProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,18 +42,6 @@ namespace SchoolDataApplication.Migrations
                     b.ToTable("ClassAssignments");
 
                     b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            ClassId = 1,
-                            SchoolId = 1
-                        },
-                        new
-                        {
-                            UserId = 1,
-                            ClassId = 2,
-                            SchoolId = 1
-                        },
                         new
                         {
                             UserId = 2,
@@ -88,7 +78,7 @@ namespace SchoolDataApplication.Migrations
                         new
                         {
                             SchoolId = 1,
-                            Address = "TPX Road, London, TPX 123, UK",
+                            Address = "TPX, London, UK",
                             Name = "TPXImpact School"
                         });
                 });
@@ -175,9 +165,6 @@ namespace SchoolDataApplication.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int?>("SchoolId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("UserTypeId")
                         .HasColumnType("int");
 
@@ -185,8 +172,6 @@ namespace SchoolDataApplication.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("SchoolId");
 
                     b.HasIndex("UserTypeId");
 
@@ -200,18 +185,37 @@ namespace SchoolDataApplication.Migrations
                             UserId = 1,
                             FirstName = "Ben",
                             LastName = "Sztucki",
-                            SchoolId = 1,
                             UserTypeId = 1
                         },
                         new
                         {
                             UserId = 2,
-                            DateOfBirth = new DateTime(1996, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Madeleine",
                             LastName = "Williams",
-                            SchoolId = 1,
                             UserTypeId = 2,
                             YearGroupId = 1
+                        });
+                });
+
+            modelBuilder.Entity("SchoolDataApplication.Models.UserSchool", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SchoolId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "SchoolId");
+
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("UserSchools");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            SchoolId = 1
                         });
                 });
 
@@ -275,56 +279,6 @@ namespace SchoolDataApplication.Migrations
                         {
                             YearGroupId = 3,
                             Name = "Year 3"
-                        },
-                        new
-                        {
-                            YearGroupId = 4,
-                            Name = "Year 4"
-                        },
-                        new
-                        {
-                            YearGroupId = 5,
-                            Name = "Year 5"
-                        },
-                        new
-                        {
-                            YearGroupId = 6,
-                            Name = "Year 6"
-                        },
-                        new
-                        {
-                            YearGroupId = 7,
-                            Name = "Year 7"
-                        },
-                        new
-                        {
-                            YearGroupId = 8,
-                            Name = "Year 8"
-                        },
-                        new
-                        {
-                            YearGroupId = 9,
-                            Name = "Year 9"
-                        },
-                        new
-                        {
-                            YearGroupId = 10,
-                            Name = "Year 10"
-                        },
-                        new
-                        {
-                            YearGroupId = 11,
-                            Name = "Year 11"
-                        },
-                        new
-                        {
-                            YearGroupId = 12,
-                            Name = "Year 12"
-                        },
-                        new
-                        {
-                            YearGroupId = 13,
-                            Name = "Year 13"
                         });
                 });
 
@@ -349,10 +303,6 @@ namespace SchoolDataApplication.Migrations
 
             modelBuilder.Entity("SchoolDataApplication.Models.User", b =>
                 {
-                    b.HasOne("SchoolDataApplication.Models.School", "School")
-                        .WithMany("Users")
-                        .HasForeignKey("SchoolId");
-
                     b.HasOne("SchoolDataApplication.Models.UserType", "UserType")
                         .WithMany("Users")
                         .HasForeignKey("UserTypeId");
@@ -361,16 +311,33 @@ namespace SchoolDataApplication.Migrations
                         .WithMany("Users")
                         .HasForeignKey("YearGroupId");
 
-                    b.Navigation("School");
-
                     b.Navigation("UserType");
 
                     b.Navigation("YearGroup");
                 });
 
+            modelBuilder.Entity("SchoolDataApplication.Models.UserSchool", b =>
+                {
+                    b.HasOne("SchoolDataApplication.Models.School", "School")
+                        .WithMany("UserSchools")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolDataApplication.Models.User", "User")
+                        .WithMany("UserSchools")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("School");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SchoolDataApplication.Models.School", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("UserSchools");
                 });
 
             modelBuilder.Entity("SchoolDataApplication.Models.SchoolClass", b =>
@@ -381,6 +348,8 @@ namespace SchoolDataApplication.Migrations
             modelBuilder.Entity("SchoolDataApplication.Models.User", b =>
                 {
                     b.Navigation("ClassAssignments");
+
+                    b.Navigation("UserSchools");
                 });
 
             modelBuilder.Entity("SchoolDataApplication.Models.UserType", b =>
