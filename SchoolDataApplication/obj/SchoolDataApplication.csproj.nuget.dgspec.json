@@ -4,14 +4,96 @@
     "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj": {
+    "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj",
-        "projectName": "SchoolDataApplication",
-        "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj",
+        "projectUniqueName": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Data\\Data.csproj",
+        "projectName": "Data",
+        "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Data\\Data.csproj",
         "packagesPath": "C:\\Users\\Madeleine Williams\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\obj\\",
+        "outputPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Madeleine Williams\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Models\\Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Models\\Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Models\\Models.csproj",
+        "projectName": "Models",
+        "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Models\\Models.csproj",
+        "packagesPath": "C:\\Users\\Madeleine Williams\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Madeleine Williams\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,12 +121,102 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj",
+        "projectName": "SchoolDataApplication",
+        "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj",
+        "packagesPath": "C:\\Users\\Madeleine Williams\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Madeleine Williams\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Data\\Data.csproj": {
+                "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Data\\Data.csproj"
+              },
+              "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Models\\Models.csproj"
+              },
+              "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Services\\Services.csproj": {
+                "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Services\\Services.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[11.1.2, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.6, )"
             },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[6.0.6, )"
             },
@@ -57,6 +229,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[6.0.6, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.3.1, )"
             }
           },
           "imports": [
@@ -73,6 +249,81 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Services\\Services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Services\\Services.csproj",
+        "projectName": "Services",
+        "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Services\\Services.csproj",
+        "packagesPath": "C:\\Users\\Madeleine Williams\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Services\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Madeleine Williams\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Data\\Data.csproj": {
+                "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Data\\Data.csproj"
+              },
+              "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\Models\\Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[11.1.2, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
