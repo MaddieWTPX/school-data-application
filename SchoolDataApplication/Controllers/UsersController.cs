@@ -25,11 +25,8 @@ namespace SchoolDataApplication.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            var schoolDataApplicationDbContext = _context.Users
-                .Include(u => u.UserType)
-                .Include(u => u.School)
-                .Include(u => u.YearGroup);
-            return View(await schoolDataApplicationDbContext.ToListAsync());
+            var userList = await _userService.GetAllUsers();
+            return View(userList);
         }
 
         // GET: Users/Details/5
@@ -40,12 +37,7 @@ namespace SchoolDataApplication.Controllers
                 return NotFound();
             }
 
-            //var user = await _context.Users
-            //    .Include(u => u.UserType).Include(u => u.School).Include(u => u.YearGroup)
-            //    .FirstOrDefaultAsync(m => m.UserId == id);
-
-
-            var user = await _context.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).ToListAsync();
+            var user = await _context.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).FirstOrDefaultAsync(m => m.UserId == id);
 
             if (user == null)
             {
@@ -135,47 +127,8 @@ namespace SchoolDataApplication.Controllers
         //    return View(user);
         //}
 
-        // GET: Users/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.Users == null)
-        //    {
-        //        return NotFound();
-        //    }
+        
 
-        //    var user = await _context.Users
-        //        .Include(u => u.UserType)
-        //        .FirstOrDefaultAsync(m => m.UserId == id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(user);
-        //}
-
-        // POST: Users/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    if (_context.Users == null)
-        //    {
-        //        return Problem("Entity set 'SchoolDataApplicationDbContext.Users'  is null.");
-        //    }
-        //    var user = await _context.Users.FindAsync(id);
-        //    if (user != null)
-        //    {
-        //        _context.Users.Remove(user);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //private bool UserExists(int id)
-        //{
-        //  return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
-        //}
+       
     }
 }
