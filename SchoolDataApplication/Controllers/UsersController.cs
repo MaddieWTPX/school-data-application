@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolDataApplication.Data;
-using SchoolDataApplication.Models;
 using SchoolDataApplication.Models.ViewModels;
+using Services.Interfaces;
+using FluentValidation.AspNetCore;
+using WebApp.Extensions;
+
 
 namespace SchoolDataApplication.Controllers
 {
     public class UsersController : Controller
     {
+        private readonly ILogger<UsersController> _logger;
+        private readonly IUserService _userService;
         private readonly SchoolDataApplicationDbContext _context;
 
-        public UsersController(SchoolDataApplicationDbContext context)
+        public UsersController(ILogger<UsersController> logger, SchoolDataApplicationDbContext context, IUserService userService)
         {
             _context = context;
+            _logger = logger;
+            _userService = userService;
         }
 
         // GET: Users
@@ -54,43 +56,31 @@ namespace SchoolDataApplication.Controllers
         }
 
         // GET: Users/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-
-             UserCreateViewModel userCreateViewModel = new UserCreateViewModel()
-            {
-                User = new User(),
-                UserTypeList = new SelectList(_context.UserTypes, "UserTypeId", "Name"),
-                SchoolList = new SelectList(_context.Schools, "SchoolId", "Name"),
-                YearGroupList = new SelectList(_context.YearGroups, "YearGroupId", "Name")
-            };
-            return View(userCreateViewModel);
+            var viewModel = await _userService.BuildCreateUserViewModel();
+            return View(viewModel);
         }
 
         // POST: Users/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(User user)
-        {// TODO create view models per page
-            UserCreateViewModel userCreateViewModel = new UserCreateViewModel()
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CreateUserViewModel viewModel)
+        {
+            viewModel = await _userService.BuildCreateUserViewModel(viewModel);
+            var result = await _userService.ValidateCreateUserViewModel(viewModel);
+            if (!result.IsValid)
             {
-                User = user,
-                UserTypeList = new SelectList(_context.UserTypes, "UserTypeId", "Name", user.UserTypeId),
-                SchoolList = new SelectList(_context.Schools, "SchoolId", "School", user.SchoolId),
-                YearGroupList = new SelectList(_context.YearGroups, "YearGroupId", "YearGroup", user.YearGroupId)
-            };
-            if (ModelState.IsValid)
-            {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-               return RedirectToAction(nameof(Index));
+                result.AddToModelState(this.ModelState);
+                return View(viewModel);
             }
 
-            return View(userCreateViewModel);
+            var user = viewModel.User;
+            await _userService.AddUser(user);
+            return Redirect("Index");
+            
+        }
 
-    }
-
-        
 
         // GET: Users/Edit/5
         //public async Task<IActionResult> Edit(int? id)
@@ -178,14 +168,14 @@ namespace SchoolDataApplication.Controllers
         //    {
         //        _context.Users.Remove(user);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}
 
-        private bool UserExists(int id)
-        {
-          return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
-        }
+        //private bool UserExists(int id)
+        //{
+        //  return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
+        //}
     }
 }
