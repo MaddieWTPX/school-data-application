@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace SchoolDataApplication.Models
+namespace Models.Entities
 {
     public class YearGroup
     {

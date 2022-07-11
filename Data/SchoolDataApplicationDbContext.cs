@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SchoolDataApplication.Models;
-using System.ComponentModel.DataAnnotations.Schema;
+using Models;
+using Models.Entities;
 
 namespace SchoolDataApplication.Data
 {
@@ -60,7 +60,7 @@ namespace SchoolDataApplication.Data
                 .WithMany(a => a.ClassAssignments)
                 .HasForeignKey(a => a.ClassId);
 
-
+            
 
             SeedData(modelBuilder);
 
@@ -113,6 +113,8 @@ namespace SchoolDataApplication.Data
                 new ClassAssignment { UserId = 2, SchoolId = 1, ClassId = 1 },
                 new ClassAssignment { UserId = 2, SchoolId = 1, ClassId = 2 }
                 );
+
+            
         }
 
         public DbSet<User> Users { get; set; }

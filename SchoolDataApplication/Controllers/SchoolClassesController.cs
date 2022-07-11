@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SchoolDataApplication.Data;
-using SchoolDataApplication.Models;
+using Models.Entities;
 
 namespace SchoolDataApplication.Controllers
 {

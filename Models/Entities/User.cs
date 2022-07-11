@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchoolDataApplication.Models
+namespace Models.Entities
 {
     public class User
     {
@@ -26,8 +26,10 @@ namespace SchoolDataApplication.Models
         public string LastName { get; set; }
 
         [DisplayName("User Type")]
-        public int? UserTypeId { get; set; }
+        public int UserTypeId { get; set; }
 
+        [DisplayName("School")]
+        public int SchoolId { get; set; }
 
         //
         // Optional
@@ -40,8 +42,7 @@ namespace SchoolDataApplication.Models
         [DisplayName("Year Group")]
         public int? YearGroupId { get; set; }
 
-        [DisplayName("School")]
-        public int? SchoolId { get; set; }
+
         //
         // Navigation Properties
 

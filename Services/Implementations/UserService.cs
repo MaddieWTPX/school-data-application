@@ -3,19 +3,21 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolDataApplication.Data;
-using SchoolDataApplication.Models;
-using SchoolDataApplication.Models.ViewModels;
+using Models.Entities.ViewModels;
+using Models.Entities;
 using Services.Interfaces;
 
 namespace Services.Implementations
 {
     public class UserService : BaseService, IUserService
     {
-        private readonly IValidator<CreateUserViewModel> _validator;
+        private readonly IValidator<CreateUserViewModel> _createUserViewModelValidator;
+        private readonly IValidator<EditUserViewModel> _editUserViewModelValidator;
 
-        public UserService(SchoolDataApplicationDbContext schoolDataApplicationDbContext, IValidator<CreateUserViewModel> validator) : base(schoolDataApplicationDbContext)
+        public UserService(SchoolDataApplicationDbContext schoolDataApplicationDbContext, IValidator<CreateUserViewModel> createUserViewModelValidator, IValidator<EditUserViewModel> editUserViewModelValidator) : base(schoolDataApplicationDbContext)
         {
-            _validator = validator;
+            _createUserViewModelValidator = createUserViewModelValidator;
+            _editUserViewModelValidator = editUserViewModelValidator;
         }
 
         public async Task<List<User>> GetAllUsers()
@@ -44,7 +46,7 @@ namespace Services.Implementations
 
         public async Task<ValidationResult> ValidateCreateUserViewModel(CreateUserViewModel viewModel)
         {
-            ValidationResult result = await _validator.ValidateAsync(viewModel);
+            ValidationResult result = await _createUserViewModelValidator.ValidateAsync(viewModel);
             return result;
         }
 
@@ -56,5 +58,38 @@ namespace Services.Implementations
             return new OkResult();
         }
 
+        //public async Task<User> GetUser(int id)
+        //{
+        //    var user = _schoolDataApplicationDbContext.Users.Where(u => u.UserId == id).FirstOrDefault();
+        //    return user;
+        //}
+
+        public async Task<EditUserViewModel> BuildEditUserViewModel(EditUserViewModel? viewModel = null)
+        {
+            if (viewModel == null)
+            {
+                viewModel = new EditUserViewModel { User = new User() };
+            }
+
+            viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
+            viewModel.SchoolList = await _schoolDataApplicationDbContext.Schools.ToListAsync();
+            viewModel.YearGroupList = await _schoolDataApplicationDbContext.YearGroups.ToListAsync();
+
+            return viewModel;
+        }
+
+        public async Task<ValidationResult> ValidateEditUserViewModel(EditUserViewModel viewModel)
+        {
+            ValidationResult result = await _editUserViewModelValidator.ValidateAsync(viewModel);
+            return result;
+        }
+
+        public async Task<ActionResult> EditUser(User user)
+        {
+            
+            //await _schoolDataApplicationDbContext.Users.Update(user);
+            await _schoolDataApplicationDbContext.SaveChangesAsync();
+            return new OkResult();
+        }
     }
 }

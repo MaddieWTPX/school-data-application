@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolDataApplication.Data;
-using SchoolDataApplication.Models.ViewModels;
 using Services.Interfaces;
 using FluentValidation.AspNetCore;
 using WebApp.Extensions;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Models.Entities.ViewModels;
+using Models.Entities;
 
 namespace SchoolDataApplication.Controllers
 {
@@ -74,61 +75,43 @@ namespace SchoolDataApplication.Controllers
         }
 
 
-        // GET: Users/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Users == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //GET: Users/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            var viewModel = await _userService.BuildEditUserViewModel();
+            return View(viewModel);
+            
+        }
 
-        //    var user = await _context.Users.FindAsync(id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "UserTypeId", user.UserTypeId);
-        //    return View(user);
-        //}
-
-        // POST: Users/Edit/5
+        //POST: Users/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("UserId,FirstName,LastName,School,DateOfBirth,YearGroup,UserTypeId")] User user)
-        //{
-        //    if (id != user.UserId)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id, EditUserViewModel viewModel)
+        {
+            viewModel = await _userService.BuildEditUserViewModel(viewModel);
+            var result = await _userService.ValidateEditUserViewModel(viewModel);
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+                return View(viewModel);
+            }
+            var user = _context.Users.SingleOrDefault(u => u.UserId == id);
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(user);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!UserExists(user.UserId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "UserTypeId", user.UserTypeId);
-        //    return View(user);
-        //}
+            user.FirstName = viewModel.User.FirstName;
+            user.LastName = viewModel.User.LastName;
+            user.UserTypeId = viewModel.User.UserTypeId;
+            user.SchoolId = viewModel.User.SchoolId;
+            user.DateOfBirth = viewModel.User.DateOfBirth;
+            user.YearGroupId = viewModel.User.YearGroupId;
 
-        
 
-       
+
+            _context.Entry(user).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }

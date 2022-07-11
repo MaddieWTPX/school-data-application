@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿namespace Models.Entities.ViewModels
 
-namespace SchoolDataApplication.Models.ViewModels
 {
     public class CreateUserViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SchoolDataApplication.Models
+namespace Models.Entities
 {
     public class ClassAssignment
     {
