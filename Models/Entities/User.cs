@@ -35,7 +35,7 @@ namespace Models.Entities
         // Optional
         [DisplayName("Date of Birth")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? DateOfBirth { get; set; }
 
 

@@ -86,8 +86,6 @@ namespace Services.Implementations
 
         public async Task<ActionResult> EditUser(User user)
         {
-            
-            //await _schoolDataApplicationDbContext.Users.Update(user);
             await _schoolDataApplicationDbContext.SaveChangesAsync();
             return new OkResult();
         }

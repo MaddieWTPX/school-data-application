@@ -6,8 +6,7 @@ using Models.Entities;
 namespace Services.Interfaces
 {
     public interface IUserService
-    {
-        //Task<User> GetUser(int id);
+    { 
         Task<List<User>> GetAllUsers();
         Task<CreateUserViewModel> BuildCreateUserViewModel(CreateUserViewModel? viewModel = null);
         Task<ValidationResult> ValidateCreateUserViewModel(CreateUserViewModel viewModel);

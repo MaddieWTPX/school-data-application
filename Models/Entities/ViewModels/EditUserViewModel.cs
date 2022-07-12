@@ -5,7 +5,6 @@ namespace Models.Entities.ViewModels
     public class EditUserViewModel
     {
         public User User { get; set; }
-        public int UserId { get; set; }
         public List<UserType> UserTypeList { get; set; }
         public List<School> SchoolList { get; set; }
         public List<YearGroup> YearGroupList { get; set; }
