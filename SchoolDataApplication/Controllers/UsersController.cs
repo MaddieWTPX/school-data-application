@@ -78,7 +78,7 @@ namespace SchoolDataApplication.Controllers
         //GET: Users/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var viewModel = await _userService.BuildEditUserViewModel();
+            var viewModel = await _userService.BuildEditUserViewModel(id);
             return View(viewModel);
             
         }
@@ -88,9 +88,9 @@ namespace SchoolDataApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, EditUserViewModel viewModel)
+        public async Task<IActionResult> Edit(int id, EditUserViewModel viewModel)
         {
-            viewModel = await _userService.BuildEditUserViewModel(viewModel);
+            viewModel = await _userService.BuildEditUserViewModel(id, viewModel);
             var result = await _userService.ValidateEditUserViewModel(viewModel);
             if (!result.IsValid)
             {

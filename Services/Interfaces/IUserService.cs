@@ -11,7 +11,7 @@ namespace Services.Interfaces
         Task<List<User>> GetAllUsers();
         Task<CreateUserViewModel> BuildCreateUserViewModel(CreateUserViewModel? viewModel = null);
         Task<ValidationResult> ValidateCreateUserViewModel(CreateUserViewModel viewModel);
-        Task<EditUserViewModel> BuildEditUserViewModel(EditUserViewModel? viewModel = null);
+        Task<EditUserViewModel> BuildEditUserViewModel(int id, EditUserViewModel? viewModel = null);
         Task<ValidationResult> ValidateEditUserViewModel(EditUserViewModel viewModel);
         Task<ActionResult> AddUser(User user);
         Task<ActionResult> EditUser(User user);

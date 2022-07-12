@@ -64,11 +64,11 @@ namespace Services.Implementations
         //    return user;
         //}
 
-        public async Task<EditUserViewModel> BuildEditUserViewModel(EditUserViewModel? viewModel = null)
+        public async Task<EditUserViewModel> BuildEditUserViewModel(int id, EditUserViewModel? viewModel = null)
         {
             if (viewModel == null)
             {
-                viewModel = new EditUserViewModel { User = new User() };
+                viewModel = new EditUserViewModel { User = _schoolDataApplicationDbContext.Users.Find(id) };
             }
 
             viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
