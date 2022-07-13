@@ -7,6 +7,7 @@ using WebApp.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.Entities.ViewModels;
 using Models.Entities;
+using AutoMapper;
 
 namespace SchoolDataApplication.Controllers
 {
@@ -71,7 +72,7 @@ namespace SchoolDataApplication.Controllers
             var user = viewModel.User;
             await _userService.AddUser(user);
             return Redirect("Index");
-            
+
         }
 
 
@@ -80,7 +81,7 @@ namespace SchoolDataApplication.Controllers
         {
             var viewModel = await _userService.BuildEditUserViewModel(id);
             return View(viewModel);
-            
+
         }
 
         //POST: Users/Edit/5
@@ -90,6 +91,7 @@ namespace SchoolDataApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, EditUserViewModel viewModel)
         {
+
             viewModel = await _userService.BuildEditUserViewModel(id, viewModel);
             var result = await _userService.ValidateEditUserViewModel(viewModel);
             if (!result.IsValid)
@@ -97,21 +99,21 @@ namespace SchoolDataApplication.Controllers
                 result.AddToModelState(this.ModelState);
                 return View(viewModel);
             }
-            var user = _context.Users.SingleOrDefault(u => u.UserId == id);
+            //var user = _context.Users.SingleOrDefault(u => u.UserId == id);
 
-            user.FirstName = viewModel.User.FirstName;
-            user.LastName = viewModel.User.LastName;
-            user.UserTypeId = viewModel.User.UserTypeId;
-            user.SchoolId = viewModel.User.SchoolId;
-            user.DateOfBirth = viewModel.User.DateOfBirth;
-            user.YearGroupId = viewModel.User.YearGroupId;
-
-
-
-            _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            //user.FirstName = viewModel.User.FirstName;
+            //user.LastName = viewModel.User.LastName;
+            //user.UserTypeId = viewModel.User.UserTypeId;
+            //user.SchoolId = viewModel.User.SchoolId;
+            //user.DateOfBirth = viewModel.User.DateOfBirth;
+            //user.YearGroupId = viewModel.User.YearGroupId;
+            //_context.Entry(user).State = EntityState.Modified;
+            //_context.SaveChanges();
+            var userToUpdate = viewModel.User;
+            await _userService.EditUser(userToUpdate);
+            return Redirect("Index");
         }
-
     }
+
 }
+

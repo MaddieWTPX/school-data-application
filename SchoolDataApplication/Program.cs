@@ -21,6 +21,8 @@ builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
 });
 
 // Add services to the container.
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddControllersWithViews().AddFluentValidation(options =>
 {
     options.RegisterValidatorsFromAssemblyContaining<UserValidator>();

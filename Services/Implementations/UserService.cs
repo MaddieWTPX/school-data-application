@@ -6,6 +6,7 @@ using SchoolDataApplication.Data;
 using Models.Entities.ViewModels;
 using Models.Entities;
 using Services.Interfaces;
+using AutoMapper;
 
 namespace Services.Implementations
 {
@@ -13,11 +14,13 @@ namespace Services.Implementations
     {
         private readonly IValidator<CreateUserViewModel> _createUserViewModelValidator;
         private readonly IValidator<EditUserViewModel> _editUserViewModelValidator;
+        private readonly IMapper _mapper;
 
-        public UserService(SchoolDataApplicationDbContext schoolDataApplicationDbContext, IValidator<CreateUserViewModel> createUserViewModelValidator, IValidator<EditUserViewModel> editUserViewModelValidator) : base(schoolDataApplicationDbContext)
+        public UserService(SchoolDataApplicationDbContext schoolDataApplicationDbContext, IValidator<CreateUserViewModel> createUserViewModelValidator, IValidator<EditUserViewModel> editUserViewModelValidator, IMapper mapper) : base(schoolDataApplicationDbContext)
         {
             _createUserViewModelValidator = createUserViewModelValidator;
             _editUserViewModelValidator = editUserViewModelValidator;
+            _mapper = mapper;
         }
 
         public async Task<List<User>> GetAllUsers()
@@ -34,7 +37,7 @@ namespace Services.Implementations
         {
             if (viewModel == null)
             {
-                viewModel = new CreateUserViewModel { User = new User () };
+                viewModel = new CreateUserViewModel { User = new User() };
             }
 
             viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
@@ -66,14 +69,23 @@ namespace Services.Implementations
 
         public async Task<EditUserViewModel> BuildEditUserViewModel(int id, EditUserViewModel? viewModel = null)
         {
+            var user = _schoolDataApplicationDbContext.Users.SingleOrDefault(u => u.UserId == id);
             if (viewModel == null)
             {
-                viewModel = new EditUserViewModel { User = _schoolDataApplicationDbContext.Users.Find(id) };
+                viewModel = new EditUserViewModel { User = user };
             }
 
             viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
             viewModel.SchoolList = await _schoolDataApplicationDbContext.Schools.ToListAsync();
             viewModel.YearGroupList = await _schoolDataApplicationDbContext.YearGroups.ToListAsync();
+
+            user.UserId = viewModel.User.UserId;
+            user.FirstName = viewModel.User.FirstName;
+            user.LastName = viewModel.User.LastName;
+            user.UserTypeId = viewModel.User.UserTypeId;
+            user.SchoolId = viewModel.User.SchoolId;
+            user.DateOfBirth = viewModel.User.DateOfBirth;
+            user.YearGroupId = viewModel.User.YearGroupId;
 
             return viewModel;
         }
@@ -86,8 +98,34 @@ namespace Services.Implementations
 
         public async Task<ActionResult> EditUser(User user)
         {
-            await _schoolDataApplicationDbContext.SaveChangesAsync();
-            return new OkResult();
+            try
+            {
+                if (!await DoesUserExist(user.UserId))
+                {
+                    return new BadRequestObjectResult(user);
+                }
+
+                var userToUpdate = await _schoolDataApplicationDbContext.Users.SingleAsync(a => a.UserId == user.UserId);
+
+                user = Mapper.Map<User, User>(userToUpdate, user);
+
+                _schoolDataApplicationDbContext.Users.Update(userToUpdate);
+
+                await _schoolDataApplicationDbContext.SaveChangesAsync();
+
+                //_schoolDataApplicationDbContext.Entry(user).State = EntityState.Modified;
+                //_schoolDataApplicationDbContext.SaveChanges();
+                return new OkResult();
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+        }
+
+        private async Task<bool> DoesUserExist(int userId)
+        {
+            return await _schoolDataApplicationDbContext.Users.AnyAsync(a => a.UserId == userId);
         }
     }
 }

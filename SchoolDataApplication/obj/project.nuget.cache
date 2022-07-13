@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "qiES0IwUX2ic0MDB7x7ynohW9rTAcGl3vzaSIlKXUbSF+tATHJKUtRLytcFeVAt13P3iM+PLb8cYHgkAc0TWrw==",
+  "dgSpecHash": "mJmM8s0Wwj3LaGd7Vnn6mc4Jwj4TJohuIAiFavSFdFUNkIboIz80azBtiI1PMRFphycTr1EL0FbVUlCShVoThA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\WebApp.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Madeleine Williams\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
+    "C:\\Users\\Madeleine Williams\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\fluentvalidation\\11.1.0\\fluentvalidation.11.1.0.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.1.2\\fluentvalidation.aspnetcore.11.1.2.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.1.0\\fluentvalidation.dependencyinjectionextensions.11.1.0.nupkg.sha512",
@@ -58,7 +60,7 @@
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.codeanalysis.visualbasic.workspaces\\4.0.0\\microsoft.codeanalysis.visualbasic.workspaces.4.0.0.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.codeanalysis.workspaces.common\\4.0.0\\microsoft.codeanalysis.workspaces.common.4.0.0.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.codeanalysis.workspaces.msbuild\\4.0.0\\microsoft.codeanalysis.workspaces.msbuild.4.0.0.nupkg.sha512",
-    "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.data.sqlite.core\\6.0.6\\microsoft.data.sqlite.core.6.0.6.nupkg.sha512",
