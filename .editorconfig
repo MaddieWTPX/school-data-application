@@ -2,3 +2,6 @@
 
 # CS8618: Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 dotnet_diagnostic.CS8618.severity = none
+
+# CS2001: Source file 'C:\Users\Madeleine Williams\Development\SchoolProject\WebApp\Controllers\UsersController.cs' could not be found.
+dotnet_diagnostic.CS2001.severity = silent

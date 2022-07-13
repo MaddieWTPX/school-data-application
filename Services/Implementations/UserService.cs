@@ -61,12 +61,6 @@ namespace Services.Implementations
             return new OkResult();
         }
 
-        //public async Task<User> GetUser(int id)
-        //{
-        //    var user = _schoolDataApplicationDbContext.Users.Where(u => u.UserId == id).FirstOrDefault();
-        //    return user;
-        //}
-
         public async Task<EditUserViewModel> BuildEditUserViewModel(int id, EditUserViewModel? viewModel = null)
         {
             var user = _schoolDataApplicationDbContext.Users.SingleOrDefault(u => u.UserId == id);
@@ -84,48 +78,52 @@ namespace Services.Implementations
             user.LastName = viewModel.User.LastName;
             user.UserTypeId = viewModel.User.UserTypeId;
             user.SchoolId = viewModel.User.SchoolId;
-            user.DateOfBirth = viewModel.User.DateOfBirth;
-            user.YearGroupId = viewModel.User.YearGroupId;
-
+            if (viewModel.User.UserTypeId == 1)
+            {
+                user.DateOfBirth = null;
+                user.YearGroupId = null;
+            }
+            else
+            {
+                user.DateOfBirth = viewModel.User.DateOfBirth;
+                user.YearGroupId = viewModel.User.YearGroupId;
+            }
             return viewModel;
         }
 
-        public async Task<ValidationResult> ValidateEditUserViewModel(EditUserViewModel viewModel)
-        {
-            ValidationResult result = await _editUserViewModelValidator.ValidateAsync(viewModel);
-            return result;
-        }
+    public async Task<ValidationResult> ValidateEditUserViewModel(EditUserViewModel viewModel)
+    {
+        ValidationResult result = await _editUserViewModelValidator.ValidateAsync(viewModel);
+        return result;
+    }
 
-        public async Task<ActionResult> EditUser(User user)
+    public async Task<ActionResult> EditUser(User user)
+    {
+        try
         {
-            try
+            if (!await DoesUserExist(user.UserId))
             {
-                if (!await DoesUserExist(user.UserId))
-                {
-                    return new BadRequestObjectResult(user);
-                }
-
-                var userToUpdate = await _schoolDataApplicationDbContext.Users.SingleAsync(a => a.UserId == user.UserId);
-
-                user = Mapper.Map<User, User>(userToUpdate, user);
-
-                _schoolDataApplicationDbContext.Users.Update(userToUpdate);
-
-                await _schoolDataApplicationDbContext.SaveChangesAsync();
-
-                //_schoolDataApplicationDbContext.Entry(user).State = EntityState.Modified;
-                //_schoolDataApplicationDbContext.SaveChanges();
-                return new OkResult();
+                return new BadRequestObjectResult(user);
             }
-            catch (Exception ex)
-            {
-                return new BadRequestObjectResult(ex.Message);
-            }
+
+            var userToUpdate = await _schoolDataApplicationDbContext.Users.SingleAsync(a => a.UserId == user.UserId);
+
+            user = _mapper.Map(user, userToUpdate);
+
+            _schoolDataApplicationDbContext.Users.Update(userToUpdate);
+
+            await _schoolDataApplicationDbContext.SaveChangesAsync();
+            return new OkResult();
         }
-
-        private async Task<bool> DoesUserExist(int userId)
+        catch (Exception ex)
         {
-            return await _schoolDataApplicationDbContext.Users.AnyAsync(a => a.UserId == userId);
+            return new BadRequestObjectResult(ex.Message);
         }
     }
+
+    private async Task<bool> DoesUserExist(int userId)
+    {
+        return await _schoolDataApplicationDbContext.Users.AnyAsync(a => a.UserId == userId);
+    }
+}
 }

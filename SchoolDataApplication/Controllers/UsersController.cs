@@ -71,7 +71,7 @@ namespace SchoolDataApplication.Controllers
 
             var user = viewModel.User;
             await _userService.AddUser(user);
-            return Redirect("Index");
+            return RedirectToAction("Index");
 
         }
 
@@ -99,19 +99,9 @@ namespace SchoolDataApplication.Controllers
                 result.AddToModelState(this.ModelState);
                 return View(viewModel);
             }
-            //var user = _context.Users.SingleOrDefault(u => u.UserId == id);
-
-            //user.FirstName = viewModel.User.FirstName;
-            //user.LastName = viewModel.User.LastName;
-            //user.UserTypeId = viewModel.User.UserTypeId;
-            //user.SchoolId = viewModel.User.SchoolId;
-            //user.DateOfBirth = viewModel.User.DateOfBirth;
-            //user.YearGroupId = viewModel.User.YearGroupId;
-            //_context.Entry(user).State = EntityState.Modified;
-            //_context.SaveChanges();
             var userToUpdate = viewModel.User;
             await _userService.EditUser(userToUpdate);
-            return Redirect("Index");
+            return RedirectToAction("Index");
         }
     }
 

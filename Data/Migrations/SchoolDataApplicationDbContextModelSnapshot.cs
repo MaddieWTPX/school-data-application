@@ -22,7 +22,7 @@ namespace SchoolDataApplication.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("SchoolDataApplication.Models.ClassAssignment", b =>
+            modelBuilder.Entity("Models.Entities.ClassAssignment", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -66,7 +66,7 @@ namespace SchoolDataApplication.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.School", b =>
+            modelBuilder.Entity("Models.Entities.School", b =>
                 {
                     b.Property<int>("SchoolId")
                         .ValueGeneratedOnAdd()
@@ -93,7 +93,7 @@ namespace SchoolDataApplication.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.SchoolClass", b =>
+            modelBuilder.Entity("Models.Entities.SchoolClass", b =>
                 {
                     b.Property<int>("ClassId")
                         .ValueGeneratedOnAdd()
@@ -156,7 +156,7 @@ namespace SchoolDataApplication.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.User", b =>
+            modelBuilder.Entity("Models.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -175,10 +175,10 @@ namespace SchoolDataApplication.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int?>("SchoolId")
+                    b.Property<int>("SchoolId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserTypeId")
+                    b.Property<int>("UserTypeId")
                         .HasColumnType("int");
 
                     b.Property<int?>("YearGroupId")
@@ -212,10 +212,18 @@ namespace SchoolDataApplication.Migrations
                             SchoolId = 1,
                             UserTypeId = 2,
                             YearGroupId = 1
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            FirstName = "Frodo",
+                            LastName = "Baggins",
+                            SchoolId = 1,
+                            UserTypeId = 1
                         });
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.UserType", b =>
+            modelBuilder.Entity("Models.Entities.UserType", b =>
                 {
                     b.Property<int>("UserTypeId")
                         .ValueGeneratedOnAdd()
@@ -244,7 +252,7 @@ namespace SchoolDataApplication.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.YearGroup", b =>
+            modelBuilder.Entity("Models.Entities.YearGroup", b =>
                 {
                     b.Property<int>("YearGroupId")
                         .ValueGeneratedOnAdd()
@@ -328,15 +336,15 @@ namespace SchoolDataApplication.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.ClassAssignment", b =>
+            modelBuilder.Entity("Models.Entities.ClassAssignment", b =>
                 {
-                    b.HasOne("SchoolDataApplication.Models.SchoolClass", "SchoolClass")
+                    b.HasOne("Models.Entities.SchoolClass", "SchoolClass")
                         .WithMany("ClassAssignments")
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolDataApplication.Models.User", "User")
+                    b.HasOne("Models.Entities.User", "User")
                         .WithMany("ClassAssignments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -347,17 +355,21 @@ namespace SchoolDataApplication.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.User", b =>
+            modelBuilder.Entity("Models.Entities.User", b =>
                 {
-                    b.HasOne("SchoolDataApplication.Models.School", "School")
+                    b.HasOne("Models.Entities.School", "School")
                         .WithMany("Users")
-                        .HasForeignKey("SchoolId");
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("SchoolDataApplication.Models.UserType", "UserType")
+                    b.HasOne("Models.Entities.UserType", "UserType")
                         .WithMany("Users")
-                        .HasForeignKey("UserTypeId");
+                        .HasForeignKey("UserTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("SchoolDataApplication.Models.YearGroup", "YearGroup")
+                    b.HasOne("Models.Entities.YearGroup", "YearGroup")
                         .WithMany("Users")
                         .HasForeignKey("YearGroupId");
 
@@ -368,27 +380,27 @@ namespace SchoolDataApplication.Migrations
                     b.Navigation("YearGroup");
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.School", b =>
+            modelBuilder.Entity("Models.Entities.School", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.SchoolClass", b =>
+            modelBuilder.Entity("Models.Entities.SchoolClass", b =>
                 {
                     b.Navigation("ClassAssignments");
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.User", b =>
+            modelBuilder.Entity("Models.Entities.User", b =>
                 {
                     b.Navigation("ClassAssignments");
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.UserType", b =>
+            modelBuilder.Entity("Models.Entities.UserType", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("SchoolDataApplication.Models.YearGroup", b =>
+            modelBuilder.Entity("Models.Entities.YearGroup", b =>
                 {
                     b.Navigation("Users");
                 });
