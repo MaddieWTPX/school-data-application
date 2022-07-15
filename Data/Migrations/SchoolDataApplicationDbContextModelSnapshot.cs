@@ -198,17 +198,17 @@ namespace SchoolDataApplication.Migrations
                         new
                         {
                             UserId = 1,
-                            FirstName = "Ben",
-                            LastName = "Sztucki",
+                            FirstName = "Gandalf",
+                            LastName = "Greyhame",
                             SchoolId = 1,
                             UserTypeId = 1
                         },
                         new
                         {
                             UserId = 2,
-                            DateOfBirth = new DateTime(1996, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Madeleine",
-                            LastName = "Williams",
+                            DateOfBirth = new DateTime(2012, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Frodo",
+                            LastName = "Baggins",
                             SchoolId = 1,
                             UserTypeId = 2,
                             YearGroupId = 1
@@ -216,10 +216,20 @@ namespace SchoolDataApplication.Migrations
                         new
                         {
                             UserId = 3,
-                            FirstName = "Frodo",
-                            LastName = "Baggins",
+                            FirstName = "Severus",
+                            LastName = "Snape",
                             SchoolId = 1,
                             UserTypeId = 1
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            DateOfBirth = new DateTime(2015, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Harry",
+                            LastName = "Potter",
+                            SchoolId = 1,
+                            UserTypeId = 2,
+                            YearGroupId = 4
                         });
                 });
 

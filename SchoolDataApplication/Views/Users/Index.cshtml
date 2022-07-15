@@ -1,51 +1,33 @@
-﻿@model IEnumerable<Models.Entities.User>
-
+﻿@model Models.ViewModels.UserListViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "User page";
 }
 
 <h1>User List</h1>
 
-<p>
+<script type="text/javascript">
+    function SortTable(sortColumn, sortDirection) {
+        $.ajax({
+            async: false,
+            url: "@Url.Action("Sort")",
+            data: { sortColumn: sortColumn, sortDirection: sortDirection },
+            type: 'GET',
+            success: function(data)
+            {
+                @Model.UserResults.Sorting.SortDirection = sortDirection;
+                $("#theTable").html(data);
+            }
+        });
+    }
+</script>
+
+<div class="text-center">
+    <h1 class="display-4">User List</h1>
+
     <a asp-action="Create">Create User</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>School Name</th>
-            <th>User Type</th>
-            <th>Year Group</th>
-            <th>Date Of Birth</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <label>@item.FirstName</label>
-                </td>
-                <td>
-                    <label>@item.LastName</label>
-                </td>
-                <td>
-                    <label>@item.School.Name</label>
-                </td>
-                <td>
-                    <label>@item.UserType.Name</label>
-                </td>
-                <td>
-                    <label>@item.YearGroup?.Name</label>
-                </td>
-                <td>
-                    <label>@item?.DateOfBirth</label>
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.UserId">Details</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+    <partial name="_UserResults" for="@Model.UserResults" />
+
+
+
+</div>

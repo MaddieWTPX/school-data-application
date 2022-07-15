@@ -1,0 +1,41 @@
+﻿@model Models.ViewModels.UserResults
+
+<div id="userResults">
+    <table class="table" id="theTable">
+        <thead>
+            <tr>
+                <th><a onclick="SortTable(1, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">First Name @((Model.Sorting.SortColumn == 1 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
+                <th><a onclick="SortTable(2, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">Last Name @((Model.Sorting.SortColumn == 2 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
+                <th><a onclick="SortTable(3, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">School Name @((Model.Sorting.SortColumn == 3 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
+                <th><a onclick="SortTable(4, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">User Type @((Model.Sorting.SortColumn == 4 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
+                <th><a onclick="SortTable(5, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">Year Group @((Model.Sorting.SortColumn == 5 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Users)
+            {
+                <tr>
+                    <td>
+                        <label>@item.FirstName</label>
+                    </td>
+                    <td>
+                        <label>@item.LastName</label>
+                    </td>
+                    <td>
+                        <label>@item.School.Name</label>
+                    </td>
+                    <td>
+                        <label>@item.UserType.Name</label>
+                    </td>
+                    <td>
+                        <label>@item.YearGroup?.Name</label>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

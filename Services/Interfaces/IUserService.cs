@@ -1,13 +1,13 @@
 ﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using Models.Entities.ViewModels;
+using Models.ViewModels;
 using Models.Entities;
 
 namespace Services.Interfaces
 {
     public interface IUserService
     { 
-        Task<List<User>> GetAllUsers();
+        Task<UserListViewModel> GetAllUsers(int sortColumn = 1, string sortDirection = "asc");
         Task<CreateUserViewModel> BuildCreateUserViewModel(CreateUserViewModel? viewModel = null);
         Task<ValidationResult> ValidateCreateUserViewModel(CreateUserViewModel viewModel);
         Task<EditUserViewModel> BuildEditUserViewModel(int id, EditUserViewModel? viewModel = null);

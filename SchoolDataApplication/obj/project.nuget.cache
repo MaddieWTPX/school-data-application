@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mJmM8s0Wwj3LaGd7Vnn6mc4Jwj4TJohuIAiFavSFdFUNkIboIz80azBtiI1PMRFphycTr1EL0FbVUlCShVoThA==",
+  "dgSpecHash": "rE3z00jOWsdS9dtosoNjt5GXLysZGsf8/7CQmlhsMGrHrJTKwB9toRDWXmvjk/xqRe19zwKVAmxV3ndqKeEHPA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\WebApp.csproj",
+  "projectFilePath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
@@ -10,6 +10,7 @@
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.1.2\\fluentvalidation.aspnetcore.11.1.2.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.1.0\\fluentvalidation.dependencyinjectionextensions.11.1.0.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Madeleine Williams\\.nuget\\packages\\jquery\\3.6.0\\jquery.3.6.0.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",

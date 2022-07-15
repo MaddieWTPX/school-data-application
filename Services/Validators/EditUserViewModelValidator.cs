@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Models.Entities.ViewModels;
+using Models.ViewModels;
 
 namespace Services.Validators
 {

@@ -105,9 +105,10 @@ namespace SchoolDataApplication.Data
                 );
 
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, UserTypeId = 1, YearGroupId = null, FirstName = "Ben", LastName = "Sztucki", DateOfBirth = null, SchoolId = 1 },
-                new User { UserId = 2, UserTypeId = 2, YearGroupId = 1, FirstName = "Madeleine", LastName = "Williams", DateOfBirth = new DateTime(1996, 4, 11), SchoolId = 1 },
-                new User { UserId = 3, UserTypeId = 1, YearGroupId = null, FirstName = "Frodo", LastName = "Baggins", DateOfBirth = null, SchoolId = 1}
+                new User { UserId = 1, UserTypeId = 1, YearGroupId = null, FirstName = "Gandalf", LastName = "Greyhame", DateOfBirth = null, SchoolId = 1 },
+                new User { UserId = 2, UserTypeId = 2, YearGroupId = 1, FirstName = "Frodo", LastName = "Baggins", DateOfBirth = new DateTime(2012, 4, 11), SchoolId = 1 },
+                new User { UserId = 3, UserTypeId = 1, YearGroupId = null, FirstName = "Severus", LastName = "Snape", DateOfBirth = null, SchoolId = 1},
+                new User { UserId = 4, UserTypeId = 2, YearGroupId = 4, FirstName = "Harry", LastName = "Potter", DateOfBirth = new DateTime(2015, 7, 31), SchoolId = 1}
                 );
 
             modelBuilder.Entity<ClassAssignment>().HasData(
@@ -135,7 +136,7 @@ namespace SchoolDataApplication.Data
         public SchoolDataApplicationDbContext CreateDbContext(string[] args)
         {
 
-            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../WebApp/appsettings.json").Build();
+            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../SchoolDataApplication/appsettings.json").Build();
             var builder = new DbContextOptionsBuilder<SchoolDataApplicationDbContext>();
             var connectionString = configuration.GetConnectionString("DevConnection");
             builder.UseSqlServer(connectionString);

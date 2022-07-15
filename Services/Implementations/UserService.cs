@@ -3,10 +3,11 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolDataApplication.Data;
-using Models.Entities.ViewModels;
+using Models.ViewModels;
 using Models.Entities;
 using Services.Interfaces;
 using AutoMapper;
+using Models;
 
 namespace Services.Implementations
 {
@@ -23,15 +24,97 @@ namespace Services.Implementations
             _mapper = mapper;
         }
 
-        public async Task<List<User>> GetAllUsers()
+        //public async Task<List<User>> GetAllUsers()
+        //{
+        //    var user = await _schoolDataApplicationDbContext.Users
+        //        .Include(u => u.UserType)
+        //        .Include(u => u.School)
+        //        .Include(u => u.YearGroup)
+        //        .ToListAsync();
+        //    return user;
+        //}
+
+
+        public async Task<UserListViewModel> GetAllUsers(int sortColumn = 1, string sortDirection = "asc")
         {
-            var user = await _schoolDataApplicationDbContext.Users
-                .Include(u => u.UserType)
-                .Include(u => u.School)
-                .Include(u => u.YearGroup)
-                .ToListAsync();
-            return user;
+            var viewModel = new UserListViewModel
+            {
+                UserResults = await GetUserResults(sortColumn, sortDirection)
+            };
+            return viewModel;
         }
+
+         private async Task<UserResults> GetUserResults(int sortColumn, string sortDirection)
+        {
+            UserResults userResults = new UserResults
+            {
+                Sorting = new Sorting
+                {
+                    SortDirection = sortDirection,
+                    SortColumn = sortColumn
+                },
+                Users = await SortUserResults(sortColumn, sortDirection)
+            };
+            return userResults;
+        }
+
+        public async Task<List<User>> SortUserResults(int sortColumn, string sortDirection)
+        {
+            var users = new List<User>();
+
+
+            if (sortDirection == "asc")
+            {
+                switch (sortColumn)
+                {
+                    case 1:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.FirstName).ToListAsync();
+                        break;
+                    case 2:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.LastName).ToListAsync();
+                        break;
+                    case 3:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.School.Name).ToListAsync();
+                        break;
+                    case 4:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.UserType.Name).ToListAsync();
+                        break;
+                    case 5:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.YearGroup.Name).ToListAsync();
+                        break;
+                    default:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.FirstName).ToListAsync();
+                        break;
+                }
+            }
+            else
+            {
+                switch (sortColumn)
+                {
+                    case 1:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderByDescending(a => a.FirstName).ToListAsync();
+                        break;
+                    case 2:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderByDescending(a => a.LastName).ToListAsync();
+                        break;
+                    case 3:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School.Name).OrderByDescending(a => a.School.Name).ToListAsync();
+                        break;
+                    case 4:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderByDescending(a => a.UserType.Name).ToListAsync();
+                        break;
+                    case 5:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderByDescending(a => a.YearGroup.Name).ToListAsync();
+                        break;
+                    default:
+                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderByDescending(a => a.FirstName).ToListAsync();
+                        break;
+                }
+            }
+
+            return users;
+        }
+
 
         public async Task<CreateUserViewModel> BuildCreateUserViewModel(CreateUserViewModel? viewModel = null)
         {

@@ -2,7 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace WebApp.Extensions
+namespace SchoolDataApplication.Extensions
 {
     public static class ModelStateExtension
     {
