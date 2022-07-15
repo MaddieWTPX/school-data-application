@@ -106,16 +106,46 @@ namespace SchoolDataApplication.Data
 
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, UserTypeId = 1, YearGroupId = null, FirstName = "Gandalf", LastName = "Greyhame", DateOfBirth = null, SchoolId = 1 },
-                new User { UserId = 2, UserTypeId = 2, YearGroupId = 1, FirstName = "Frodo", LastName = "Baggins", DateOfBirth = new DateTime(2012, 4, 11), SchoolId = 1 },
-                new User { UserId = 3, UserTypeId = 1, YearGroupId = null, FirstName = "Severus", LastName = "Snape", DateOfBirth = null, SchoolId = 1},
-                new User { UserId = 4, UserTypeId = 2, YearGroupId = 4, FirstName = "Harry", LastName = "Potter", DateOfBirth = new DateTime(2015, 7, 31), SchoolId = 1}
+                new User { UserId = 2, UserTypeId = 1, YearGroupId = null, FirstName = "Severus", LastName = "Snape", DateOfBirth = null, SchoolId = 1},
+                new User { UserId = 3, UserTypeId = 2, YearGroupId = null, FirstName = "Seymour", LastName = "Skinner", DateOfBirth = null, SchoolId = 1 },
+                new User { UserId = 4, UserTypeId = 2, YearGroupId = null, FirstName = "Haymitch", LastName = "Abernathy ", DateOfBirth = null, SchoolId = 1 },
+                new User { UserId = 5, UserTypeId = 1, YearGroupId = null, FirstName = "Edna", LastName = "Krabapple", DateOfBirth = null, SchoolId = 1 },
+                new User { UserId = 6, UserTypeId = 1, YearGroupId = null, FirstName = "Minerva", LastName = "McGonagall", DateOfBirth = null, SchoolId = 1 },
+                new User { UserId = 7, UserTypeId = 1, YearGroupId = null, FirstName = "Albus", LastName = "Dumbledore", DateOfBirth = null, SchoolId = 1 },
+                new User { UserId = 8, UserTypeId = 2, YearGroupId = 6, FirstName = "Frodo", LastName = "Baggins", DateOfBirth = new DateTime(2011, 3, 11), SchoolId = 1 },
+                new User { UserId = 9, UserTypeId = 2, YearGroupId = 2, FirstName = "Harry", LastName = "Potter", DateOfBirth = new DateTime(2015, 7, 31), SchoolId = 1 },
+                new User { UserId = 10, UserTypeId = 2, YearGroupId = 3, FirstName = "Lisa", LastName = "Simpson", DateOfBirth = new DateTime(2014, 2, 19), SchoolId = 1 },
+                new User { UserId = 11, UserTypeId = 2, YearGroupId = 4, FirstName = "Katniss", LastName = "Everdeen", DateOfBirth = new DateTime(2016, 9, 9), SchoolId = 1 },
+                new User { UserId = 12, UserTypeId = 2, YearGroupId = 5, FirstName = "Milhouse", LastName = "Vanhouten", DateOfBirth = new DateTime(2014, 8, 4), SchoolId = 1 },
+                new User { UserId = 13, UserTypeId = 2, YearGroupId = 6, FirstName = "Samwise", LastName = "Gamgee", DateOfBirth = new DateTime(2011, 2, 19), SchoolId = 1 },
+                new User { UserId = 14, UserTypeId = 2, YearGroupId = 4, FirstName = "Bart", LastName = "Simpson", DateOfBirth = new DateTime(2013, 12, 4), SchoolId = 1 }
+
                 );
 
             modelBuilder.Entity<ClassAssignment>().HasData(
                 new ClassAssignment { UserId = 1, SchoolId = 1, ClassId = 1 },
-                new ClassAssignment { UserId = 1, SchoolId = 1, ClassId = 2 },
                 new ClassAssignment { UserId = 2, SchoolId = 1, ClassId = 1 },
-                new ClassAssignment { UserId = 2, SchoolId = 1, ClassId = 2 }
+                new ClassAssignment { UserId = 3, SchoolId = 1, ClassId = 2 },
+                new ClassAssignment { UserId = 4, SchoolId = 1, ClassId = 3 },
+                new ClassAssignment { UserId = 5, SchoolId = 1, ClassId = 4 },
+                new ClassAssignment { UserId = 6, SchoolId = 1, ClassId = 5 },
+                new ClassAssignment { UserId = 7, SchoolId = 1, ClassId = 6 },
+                new ClassAssignment { UserId = 8, SchoolId = 1, ClassId = 7 },
+                new ClassAssignment { UserId = 9, SchoolId = 1, ClassId = 1 },
+                new ClassAssignment { UserId = 10, SchoolId = 1, ClassId = 1 },
+                new ClassAssignment { UserId = 11, SchoolId = 1, ClassId = 1 },
+                new ClassAssignment { UserId = 9, SchoolId = 1, ClassId = 2 },
+                new ClassAssignment { UserId = 10, SchoolId = 1, ClassId = 3 },
+                new ClassAssignment { UserId = 11, SchoolId = 1, ClassId = 4 },
+                new ClassAssignment { UserId = 12, SchoolId = 1, ClassId = 2 },
+                new ClassAssignment { UserId = 13, SchoolId = 1, ClassId = 2 },
+                new ClassAssignment { UserId = 14, SchoolId = 1, ClassId = 2 },
+                new ClassAssignment { UserId = 12, SchoolId = 1, ClassId = 4 },
+                new ClassAssignment { UserId = 13, SchoolId = 1, ClassId = 5 },
+                new ClassAssignment { UserId = 14, SchoolId = 1, ClassId = 6 },
+                new ClassAssignment { UserId = 9, SchoolId = 1, ClassId = 7 },
+                new ClassAssignment { UserId = 12, SchoolId = 1, ClassId = 7 },
+                new ClassAssignment { UserId = 13, SchoolId = 1, ClassId = 7 }
                 );
 
             
