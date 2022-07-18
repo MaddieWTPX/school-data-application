@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Models.ViewModels;
 using Models.Entities;
+using Models;
 
 namespace Services.Interfaces
 {
     public interface IUserService
     { 
-        Task<UserListViewModel> GetAllUsers(int sortColumn = 1, string sortDirection = "asc");
+        Task<UserListViewModel> BuildInitialUserListViewModel();
+        Task<UserListViewModel> BuildUserListViewModel(Sorting sorting, Paging paging);
         Task<CreateUserViewModel> BuildCreateUserViewModel(CreateUserViewModel? viewModel = null);
         Task<ValidationResult> ValidateCreateUserViewModel(CreateUserViewModel viewModel);
         Task<EditUserViewModel> BuildEditUserViewModel(int id, EditUserViewModel? viewModel = null);

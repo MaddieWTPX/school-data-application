@@ -1,7 +1,7 @@
 ﻿@model Models.ViewModels.UserResults
 
 <div id="userResults">
-    <table class="table" id="theTable">
+    <table class="table" id="userResults">
         <thead>
             <tr>
                 <th><a onclick="SortTable(1, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">First Name @((Model.Sorting.SortColumn == 1 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
@@ -38,4 +38,35 @@
             }
         </tbody>
     </table>
+
+    <div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @*Previous Button*@
+                @if (Model.Paging.CurrentPage != 1)
+                {
+                    <li class="page-item"><a class="page-link" onclick="SortTable(@Model.Sorting.SortColumn, '@Model.Sorting.SortDirection',(@Model.Paging.CurrentPage - 1))">Previous</a></li>
+                }
+                
+                @for (int i = 1; i < Model.Paging.NumberOfPages; i++)
+                {
+                    @if (i==Model.Paging.CurrentPage)
+                    {
+                        <li class="page-item active"><a class="page-link" onclick="SortTable(@Model.Sorting.SortColumn, '@Model.Sorting.SortDirection, @i)">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" onclick="SortTable(@Model.Sorting.SortColumn, '@Model.Sorting.SortDirection, @i)">@i</a></li>
+                    }
+                }
+
+                @*Next Button*@
+                @if (Model.Paging.CurrentPage != Model.Paging.NumberOfPages)
+                {
+                    <li class="page-item"><a class="page-link" onclick="SortTable(@Model.Sorting.SortColumn, '@Model.Sorting.SortDirection', (@Model.Paging.CurrentPage + 1))">Next</a></li>
+                }
+            </ul>
+        </nav>
+    </div>
+
 </div>

@@ -3,19 +3,17 @@
     ViewData["Title"] = "User page";
 }
 
-<h1>User List</h1>
 
 <script type="text/javascript">
-    function SortTable(sortColumn, sortDirection) {
+    function SortTable(sortColumn, sortDirection, currentPage) {
         $.ajax({
             async: false,
-            url: "@Url.Action("Sort")",
-            data: { sortColumn: sortColumn, sortDirection: sortDirection },
+            url: "@Url.Action("SortUserResultsTable")",
+            data: { sortColumn: sortColumn, sortDirection: sortDirection, CurrentPage: currentPage },
+
             type: 'GET',
-            success: function(data)
-            {
-                @Model.UserResults.Sorting.SortDirection = sortDirection;
-                $("#theTable").html(data);
+            success: function(data) {
+                $("#userResults").html(data);
             }
         });
     }
@@ -23,11 +21,9 @@
 
 <div class="text-center">
     <h1 class="display-4">User List</h1>
+    <partial name="_UserResults" for="@Model.UserResults" />
 
     <a asp-action="Create">Create User</a>
 
-    <partial name="_UserResults" for="@Model.UserResults" />
-
-
-
 </div>
+

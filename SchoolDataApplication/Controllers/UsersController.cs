@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.ViewModels;
 using Models.Entities;
 using AutoMapper;
+using Models;
 
 namespace SchoolDataApplication.Controllers
 {
@@ -27,7 +28,7 @@ namespace SchoolDataApplication.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            var userList = await _userService.GetAllUsers();
+            var userList = await _userService.BuildInitialUserListViewModel();
             return View(userList);
         }
 
@@ -57,10 +58,10 @@ namespace SchoolDataApplication.Controllers
         }
 
         // GET: Users
-        public async Task<IActionResult> Sort(int sortColumn, string sortDirection)
+        public async Task<IActionResult> SortUserResultsTable(Sorting sorting, Paging paging)
         {
-            var userList = await _userService.GetAllUsers(sortColumn, sortDirection);
-            var sortedData = this.ViewData;
+            var userList = await _userService.BuildUserListViewModel(sorting, paging);
+            //var sortedData = this.ViewData;
             return PartialView("_UserResults", userList.UserResults);
         }
 
