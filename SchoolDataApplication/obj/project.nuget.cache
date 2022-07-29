@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "rE3z00jOWsdS9dtosoNjt5GXLysZGsf8/7CQmlhsMGrHrJTKwB9toRDWXmvjk/xqRe19zwKVAmxV3ndqKeEHPA==",
+  "dgSpecHash": "8cTAT55MO29KncYPacdSjJwOJxLFGmjVzoAQzznFQtQlcp6KzukU32wztQCBcFKSzdQyhLveWv12wDeSxhquKA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Madeleine Williams\\Development\\SchoolProject\\SchoolDataApplication\\SchoolDataApplication.csproj",
   "expectedPackageFiles": [
@@ -71,6 +71,7 @@
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.6\\microsoft.entityframeworkcore.abstractions.6.0.6.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.6\\microsoft.entityframeworkcore.analyzers.6.0.6.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.6\\microsoft.entityframeworkcore.design.6.0.6.nupkg.sha512",
+    "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.entityframeworkcore.dynamiclinq\\6.2.19\\microsoft.entityframeworkcore.dynamiclinq.6.2.19.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.6\\microsoft.entityframeworkcore.relational.6.0.6.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\6.0.6\\microsoft.entityframeworkcore.sqlite.6.0.6.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\6.0.6\\microsoft.entityframeworkcore.sqlite.core.6.0.6.nupkg.sha512",
@@ -187,6 +188,7 @@
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\system.io.pipelines\\5.0.1\\system.io.pipelines.5.0.1.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
+    "C:\\Users\\Madeleine Williams\\.nuget\\packages\\system.linq.dynamic.core\\1.2.19\\system.linq.dynamic.core.1.2.19.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\Madeleine Williams\\.nuget\\packages\\system.net.http\\4.3.0\\system.net.http.4.3.0.nupkg.sha512",

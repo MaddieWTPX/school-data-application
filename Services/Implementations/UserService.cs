@@ -8,6 +8,7 @@ using Models.Entities;
 using Services.Interfaces;
 using AutoMapper;
 using Models;
+using Models.Constants;
 
 namespace Services.Implementations
 {
@@ -24,160 +25,91 @@ namespace Services.Implementations
             _mapper = mapper;
         }
 
-        //public async Task<List<User>> GetAllUsers()
-        //{
-        //    var user = await _schoolDataApplicationDbContext.Users
-        //        .Include(u => u.UserType)
-        //        .Include(u => u.School)
-        //        .Include(u => u.YearGroup)
-        //        .ToListAsync();
-        //    return user;
-        //}
-
 
         public async Task<UserListViewModel> BuildInitialUserListViewModel()
         {
-            var viewModel = new UserListViewModel
+            var viewModel = new UserListViewModel();
+            try
             {
-                UserResults = await GetInitialUserResults()
-            };
+                viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
+                viewModel.SchoolList = await _schoolDataApplicationDbContext.Schools.ToListAsync();
+                viewModel.YearGroupList = await _schoolDataApplicationDbContext.YearGroups.ToListAsync();
+
+                var query = BuildUserResultsQuery();
+                query = FilterUserResults(query, viewModel.FirstName, viewModel.LastName, viewModel.SelectedUserTypeId, viewModel.SelectedSchoolId, viewModel.SelectedYearGroupId);
+
+                viewModel.UserResults.TableControls.Paging = new Paging(await query.CountAsync());
+
+                query = (IQueryable<User>)viewModel.UserResults.TableControls.Sorting.SortUserResults(viewModel.UserResults.TableControls.Sorting, viewModel.UserResults.TableControls.Paging, query);
+
+                viewModel.UserResults.Results = await query.ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return viewModel;
         }
 
-        public async Task<UserListViewModel> BuildUserListViewModel(Sorting sorting, Paging paging)
+
+        private IQueryable<User> BuildUserResultsQuery()
         {
-            var viewModel = new UserListViewModel
+            return _schoolDataApplicationDbContext.Users.Include(u => u.UserType).Include(u => u.School).Include(u => u.YearGroup).AsQueryable();
+        }
+
+        private IQueryable<User> FilterUserResults(IQueryable<User> query, string? firstName, string? lastName, int? userTypeId, int? schoolId, int? yearGroupId)
+        {
+            if(!string.IsNullOrEmpty(firstName))
             {
-                UserResults = await GetUserResults(sorting, paging)
+                query = query.Where(u => u.FirstName.Contains(firstName));
+            }
+            if(!string.IsNullOrEmpty(lastName))
+            {
+                query = query.Where(u => u.LastName.Contains(lastName));
+            }
+            if(userTypeId != 0 && userTypeId != null)
+            {
+                query = query.Where(u => u.UserTypeId == userTypeId);
+            }
+            if(schoolId != 0 && schoolId != null)
+            {
+                query = query.Where(u => u.SchoolId == schoolId);
+            }
+            if(yearGroupId != 0 && yearGroupId != null)
+            {
+                query = query.Where(u => u.YearGroupId == yearGroupId);
+            }
+            return query;
+        }
+
+
+        public async Task<UserListViewModel> BuildUserListViewModel(UserListViewModel viewModel)
+        {
+            viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
+            viewModel.SchoolList = await _schoolDataApplicationDbContext.Schools.ToListAsync();
+            viewModel.YearGroupList = await _schoolDataApplicationDbContext.YearGroups.ToListAsync();
+
+            if (viewModel.UserResults.TableControls.Sorting == null)
+            {
+                viewModel.UserResults.TableControls.Sorting = new Sorting<ConstantStrings>
+                {
+                    SortColumn = new ConstantStrings().FIRST_NAME,
+                    SortingFields = new ConstantStrings()
+                };
             };
+            var query = BuildUserResultsQuery();
+            query = FilterUserResults(query, viewModel.FirstName, viewModel.LastName, viewModel.SelectedUserTypeId, viewModel.SelectedYearGroupId, viewModel.SelectedSchoolId);
+
+            viewModel.UserResults.TableControls.Paging = new Paging(await query.CountAsync());
+            query = (IQueryable<User>)viewModel.UserResults.TableControls.Sorting.SortUserResults(viewModel.UserResults.TableControls.Sorting, viewModel.UserResults.TableControls.Paging, query);
+
+            viewModel.UserResults.Results = await query.ToListAsync();
             return viewModel;
         }
 
-        private async Task<UserResults> GetInitialUserResults()
-        {
-            var recordCount = await _schoolDataApplicationDbContext.Users.CountAsync();
-            var sorting = new Sorting
-            {
-                SortColumn = 1,
-                SortDirection = "asc"
-            };
-            Paging paging = new Paging
-            {
-                RecordsToSelect = 1,
-                RecordsToSkip = 0,
-                RecordCount = recordCount,
-                NumberOfPages = (recordCount / 1),
-                CurrentPage = 1
-            };
-            UserResults userResults = new UserResults
-            {
-                Users = await SortUserResults(sorting, paging),
-                Sorting = sorting,
-                Paging = paging
-            };
-            return userResults;
-        }
-
-         private async Task<UserResults> GetUserResults(Sorting? sorting = null, Paging? paging=null)
-        {
-            if(sorting == null)
-            {
-                sorting.SortColumn = 1;
-                sorting.SortDirection = "asc";
-            }
-            if(paging.CurrentPage == 0)
-            {
-                paging.CurrentPage = 1;
-            }
-
-            var recordCount = await _schoolDataApplicationDbContext.Users.CountAsync();
-            paging.RecordsToSelect = 1;
-            paging.RecordCount = recordCount;
-            paging.NumberOfPages = (recordCount / 1);
-            paging.RecordsToSkip = await CalculateRecordsToSkip(1, paging.CurrentPage);
-
-            UserResults userResults = new UserResults
-            {
-                Users = await SortUserResults(sorting, paging),
-                Paging = paging,
-                Sorting = sorting
-            };
-            return userResults;
-        }
-
-        private async Task<int> CalculateRecordsToSkip(int recordsToSelect, int currentPage)
-        {
-            if (currentPage == 1)
-            {
-                return 0;
-            }
-            else
-            {
-                return (currentPage - 1) * recordsToSelect;
-            }
-
-        }
-
-        public async Task<List<User>> SortUserResults(Sorting sorting, Paging paging)
-        {
-            var users = new List<User>();
-
-
-            if (sorting.SortDirection == "asc")
-            {
-                switch (sorting.SortColumn)
-                {
-                    case 1:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.FirstName).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                    case 2:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.LastName).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                    case 3:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.School.Name).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                    case 4:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.UserType.Name).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                    case 5:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.YearGroup.Name).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                    default:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderBy(a => a.FirstName).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                }
-            }
-            else
-            {
-                switch (sorting.SortColumn)
-                {
-                    case 1:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderByDescending(a => a.FirstName).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                    case 2:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderByDescending(a => a.LastName).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                    case 3:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School.Name).OrderByDescending(a => a.School.Name).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                    case 4:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderByDescending(a => a.UserType.Name).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                    case 5:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderByDescending(a => a.YearGroup.Name).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                    default:
-                        users = await _schoolDataApplicationDbContext.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).OrderByDescending(a => a.FirstName).Skip(paging.RecordsToSkip).Take(paging.RecordsToSelect).ToListAsync();
-                        break;
-                }
-            }
-
-            return users;
-        }
-
-
-
-
+        //
+        // Create User
 
         public async Task<CreateUserViewModel> BuildCreateUserViewModel(CreateUserViewModel? viewModel = null)
         {
@@ -185,11 +117,16 @@ namespace Services.Implementations
             {
                 viewModel = new CreateUserViewModel { User = new User() };
             }
-
-            viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
-            viewModel.SchoolList = await _schoolDataApplicationDbContext.Schools.ToListAsync();
-            viewModel.YearGroupList = await _schoolDataApplicationDbContext.YearGroups.ToListAsync();
-
+            try
+            {
+                viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
+                viewModel.SchoolList = await _schoolDataApplicationDbContext.Schools.ToListAsync();
+                viewModel.YearGroupList = await _schoolDataApplicationDbContext.YearGroups.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return viewModel;
         }
 
@@ -207,6 +144,8 @@ namespace Services.Implementations
             return new OkResult();
         }
 
+        //
+        // Edit User
         public async Task<EditUserViewModel> BuildEditUserViewModel(int id, EditUserViewModel? viewModel = null)
         {
             var user = _schoolDataApplicationDbContext.Users.SingleOrDefault(u => u.UserId == id);
@@ -214,62 +153,68 @@ namespace Services.Implementations
             {
                 viewModel = new EditUserViewModel { User = user };
             }
-
-            viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
-            viewModel.SchoolList = await _schoolDataApplicationDbContext.Schools.ToListAsync();
-            viewModel.YearGroupList = await _schoolDataApplicationDbContext.YearGroups.ToListAsync();
-
-            user.UserId = viewModel.User.UserId;
-            user.FirstName = viewModel.User.FirstName;
-            user.LastName = viewModel.User.LastName;
-            user.UserTypeId = viewModel.User.UserTypeId;
-            user.SchoolId = viewModel.User.SchoolId;
-            if (viewModel.User.UserTypeId == 1)
+            try
             {
-                user.DateOfBirth = null;
-                user.YearGroupId = null;
+                viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
+                viewModel.SchoolList = await _schoolDataApplicationDbContext.Schools.ToListAsync();
+                viewModel.YearGroupList = await _schoolDataApplicationDbContext.YearGroups.ToListAsync();
+
+                user.UserId = viewModel.User.UserId;
+                user.FirstName = viewModel.User.FirstName;
+                user.LastName = viewModel.User.LastName;
+                user.UserTypeId = viewModel.User.UserTypeId;
+                user.SchoolId = viewModel.User.SchoolId;
+                if (viewModel.User.UserTypeId == 1)
+                {
+                    user.DateOfBirth = null;
+                    user.YearGroupId = null;
+                }
+                else
+                {
+                    user.DateOfBirth = viewModel.User.DateOfBirth;
+                    user.YearGroupId = viewModel.User.YearGroupId;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                user.DateOfBirth = viewModel.User.DateOfBirth;
-                user.YearGroupId = viewModel.User.YearGroupId;
+                throw ex;
             }
             return viewModel;
         }
 
-    public async Task<ValidationResult> ValidateEditUserViewModel(EditUserViewModel viewModel)
-    {
-        ValidationResult result = await _editUserViewModelValidator.ValidateAsync(viewModel);
-        return result;
-    }
-
-    public async Task<ActionResult> EditUser(User user)
-    {
-        try
+        public async Task<ValidationResult> ValidateEditUserViewModel(EditUserViewModel viewModel)
         {
-            if (!await DoesUserExist(user.UserId))
+            ValidationResult result = await _editUserViewModelValidator.ValidateAsync(viewModel);
+            return result;
+        }
+
+        public async Task<ActionResult> EditUser(User user)
+        {
+            try
             {
-                return new BadRequestObjectResult(user);
+                if (!await DoesUserExist(user.UserId))
+                {
+                    return new BadRequestObjectResult(user);
+                }
+
+                var userToUpdate = await _schoolDataApplicationDbContext.Users.SingleAsync(a => a.UserId == user.UserId);
+
+                user = _mapper.Map(user, userToUpdate);
+
+                _schoolDataApplicationDbContext.Users.Update(userToUpdate);
+
+                await _schoolDataApplicationDbContext.SaveChangesAsync();
+                return new OkResult();
             }
-
-            var userToUpdate = await _schoolDataApplicationDbContext.Users.SingleAsync(a => a.UserId == user.UserId);
-
-            user = _mapper.Map(user, userToUpdate);
-
-            _schoolDataApplicationDbContext.Users.Update(userToUpdate);
-
-            await _schoolDataApplicationDbContext.SaveChangesAsync();
-            return new OkResult();
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
         }
-        catch (Exception ex)
+
+        private async Task<bool> DoesUserExist(int userId)
         {
-            return new BadRequestObjectResult(ex.Message);
+            return await _schoolDataApplicationDbContext.Users.AnyAsync(a => a.UserId == userId);
         }
     }
-
-    private async Task<bool> DoesUserExist(int userId)
-    {
-        return await _schoolDataApplicationDbContext.Users.AnyAsync(a => a.UserId == userId);
-    }
-}
 }

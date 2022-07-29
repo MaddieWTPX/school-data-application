@@ -133,6 +133,10 @@
             "Microsoft.AspNetCore.Mvc.ViewFeatures": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.DynamicLinq": {
+              "target": "Package",
+              "version": "[6.2.19, )"
             }
           },
           "imports": [
@@ -345,6 +349,10 @@
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[11.1.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.DynamicLinq": {
+              "target": "Package",
+              "version": "[6.2.19, )"
             }
           },
           "imports": [

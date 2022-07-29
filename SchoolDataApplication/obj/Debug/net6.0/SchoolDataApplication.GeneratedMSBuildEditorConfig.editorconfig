@@ -87,6 +87,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Madeleine Williams/Development/SchoolProject/SchoolDataApplication/Views/Shared/_PagingPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QYWdpbmdQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Madeleine Williams/Development/SchoolProject/SchoolDataApplication/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -105,6 +109,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Madeleine Williams/Development/SchoolProject/SchoolDataApplication/Views/Users/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Madeleine Williams/Development/SchoolProject/SchoolDataApplication/Views/Users/Filter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRmlsdGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Madeleine Williams/Development/SchoolProject/SchoolDataApplication/Views/Users/Index.cshtml]

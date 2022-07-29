@@ -9,6 +9,7 @@ using Models.ViewModels;
 using Models.Entities;
 using AutoMapper;
 using Models;
+using Models.Constants;
 
 namespace SchoolDataApplication.Controllers
 {
@@ -28,27 +29,34 @@ namespace SchoolDataApplication.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+            var userList = new UserListViewModel();
+            try
+            {
+                userList = await _userService.BuildInitialUserListViewModel();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return View(userList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(UserListViewModel viewModel)
+        {
             var userList = await _userService.BuildInitialUserListViewModel();
             return View(userList);
         }
 
-        // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+
+        // GET: Users
+        public async Task<IActionResult> SortUserResultsTable(Sorting<ConstantStrings> sorting, Paging paging)
         {
-            if (id == null || _context.Users == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).FirstOrDefaultAsync(m => m.UserId == id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
+            var viewModel = new UserListViewModel(sorting, paging);
+            var userList = await _userService.BuildUserListViewModel(viewModel);
+            return PartialView("_UserResults", userList.UserResults);
         }
+
 
         // GET: Users/Create
         public async Task<IActionResult> Create()
@@ -56,17 +64,6 @@ namespace SchoolDataApplication.Controllers
             var viewModel = await _userService.BuildCreateUserViewModel();
             return View(viewModel);
         }
-
-        // GET: Users
-        public async Task<IActionResult> SortUserResultsTable(Sorting sorting, Paging paging)
-        {
-            var userList = await _userService.BuildUserListViewModel(sorting, paging);
-            //var sortedData = this.ViewData;
-            return PartialView("_UserResults", userList.UserResults);
-        }
-
-
-
 
 
         // POST: Users/Create
@@ -154,6 +151,26 @@ namespace SchoolDataApplication.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
+        // GET: Users/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.Users == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.Include(a => a.UserType).Include(a => a.YearGroup).Include(a => a.School).FirstOrDefaultAsync(m => m.UserId == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
     }
 }
 

@@ -21,9 +21,58 @@
 
 <div class="text-center">
     <h1 class="display-4">User List</h1>
-    <partial name="_UserResults" for="@Model.UserResults" />
+    <form asp-action="Index">
+        <input asp-for="@Model.UserResults.TableControls.Paging.CurrentPage" type="hidden" />
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="control-label float-start">First Name</label>
+                    <input asp-for="@Model.FirstName" class="form-control" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="control-label float-start">Last Name</label>
+                    <input asp-for="@Model.LastName" class="form-control" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="control-label float-start">User Type</label>
+                    <select asp-items="@(new SelectList(Model.UserTypeList, "UserTypeId", "Name", Model.SelectedUserTypeId))" asp-for="@Model.SelectedUserTypeId" class="form-control">
+                        <option value="0">Select:</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="control-label float-start">Year Group</label>
+                    <select asp-items="@(new SelectList(Model.YearGroupList, "YearGroupId", "Name", Model.SelectedYearGroupId))" asp-for="@Model.SelectedYearGroupId" class="form-control">
+                        <option value="0">Select:</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="control-label float-start">School</label>
+                    <select asp-items="@(new SelectList(Model.SchoolList, "SchoolId", "Name", Model.SelectedSchoolId))" asp-for="@Model.SelectedSchoolId" class="form-control">
+                        <option value="0">Select:</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-primary float-end ms-3" asp-action="Create">Create User</a>
+                <button type="submit" class="btn btn-outline-primary float-end ms-3">Search</button>
+            </div>
+        </div>
 
-    <a asp-action="Create">Create User</a>
+    </form>
+
+    <div>
+        <partial name="_UserResults" for="@Model.UserResults" />
+    </div>
 
 </div>
 

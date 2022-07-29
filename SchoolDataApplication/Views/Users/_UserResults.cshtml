@@ -1,18 +1,18 @@
-﻿@model Models.ViewModels.UserResults
+﻿@model Models.PagedResults<List<Models.Entities.User>, Models.Constants.ConstantStrings>
 
 <div id="userResults">
     <table class="table" id="userResults">
         <thead>
             <tr>
-                <th><a onclick="SortTable(1, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">First Name @((Model.Sorting.SortColumn == 1 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
-                <th><a onclick="SortTable(2, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">Last Name @((Model.Sorting.SortColumn == 2 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
-                <th><a onclick="SortTable(3, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">School Name @((Model.Sorting.SortColumn == 3 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
-                <th><a onclick="SortTable(4, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">User Type @((Model.Sorting.SortColumn == 4 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
-                <th><a onclick="SortTable(5, @(Model.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">Year Group @((Model.Sorting.SortColumn == 5 ? (Model.Sorting.SortDirection == "asc" ? "↑" : Model.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
+                <th><a onclick="SortTable('@Model.TableControls.Sorting.SortingFields.FIRST_NAME', @(Model.TableControls.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">First Name @((Model.TableControls.Sorting.SortColumn == Model.TableControls.Sorting.SortingFields.FIRST_NAME ? (Model.TableControls.Sorting.SortDirection == "asc" ? "↑" : Model.TableControls.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
+                <th><a onclick="SortTable('@Model.TableControls.Sorting.SortingFields.LAST_NAME', @(Model.TableControls.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">Last Name @((Model.TableControls.Sorting.SortColumn == Model.TableControls.Sorting.SortingFields.LAST_NAME ? (Model.TableControls.Sorting.SortDirection == "asc" ? "↑" : Model.TableControls.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
+                <th><a onclick="SortTable('@Model.TableControls.Sorting.SortingFields.SCHOOL', @(Model.TableControls.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">School @((Model.TableControls.Sorting.SortColumn == Model.TableControls.Sorting.SortingFields.SCHOOL ? (Model.TableControls.Sorting.SortDirection == "asc" ? "↑" : Model.TableControls.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
+                <th><a onclick="SortTable('@Model.TableControls.Sorting.SortingFields.USER_TYPE', @(Model.TableControls.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">User Type @((Model.TableControls.Sorting.SortColumn == Model.TableControls.Sorting.SortingFields.USER_TYPE ? (Model.TableControls.Sorting.SortDirection == "asc" ? "↑" : Model.TableControls.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
+                <th><a onclick="SortTable('@Model.TableControls.Sorting.SortingFields.YEAR_GROUP', @(Model.TableControls.Sorting.SortDirection == "asc" ? "'desc'" : "'asc'"))">Year Group @((Model.TableControls.Sorting.SortColumn == Model.TableControls.Sorting.SortingFields.YEAR_GROUP ? (Model.TableControls.Sorting.SortDirection == "asc" ? "↑" : Model.TableControls.Sorting.SortDirection == "desc" ? "↓": "") : ""))</a></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Users)
+            @foreach (var item in Model.Results)
             {
                 <tr>
                     <td>
@@ -39,34 +39,6 @@
         </tbody>
     </table>
 
-    <div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                @*Previous Button*@
-                @if (Model.Paging.CurrentPage != 1)
-                {
-                    <li class="page-item"><a class="page-link" onclick="SortTable(@Model.Sorting.SortColumn, '@Model.Sorting.SortDirection',(@Model.Paging.CurrentPage - 1))">Previous</a></li>
-                }
-                
-                @for (int i = 1; i < Model.Paging.NumberOfPages; i++)
-                {
-                    @if (i==Model.Paging.CurrentPage)
-                    {
-                        <li class="page-item active"><a class="page-link" onclick="SortTable(@Model.Sorting.SortColumn, '@Model.Sorting.SortDirection, @i)">@i</a></li>
-                    }
-                    else
-                    {
-                        <li class="page-item"><a class="page-link" onclick="SortTable(@Model.Sorting.SortColumn, '@Model.Sorting.SortDirection, @i)">@i</a></li>
-                    }
-                }
-
-                @*Next Button*@
-                @if (Model.Paging.CurrentPage != Model.Paging.NumberOfPages)
-                {
-                    <li class="page-item"><a class="page-link" onclick="SortTable(@Model.Sorting.SortColumn, '@Model.Sorting.SortDirection', (@Model.Paging.CurrentPage + 1))">Next</a></li>
-                }
-            </ul>
-        </nav>
-    </div>
+    <partial name="_PagingPartial" for="@Model.TableControls" />
 
 </div>

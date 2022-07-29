@@ -9,7 +9,7 @@ namespace Services.Interfaces
     public interface IUserService
     { 
         Task<UserListViewModel> BuildInitialUserListViewModel();
-        Task<UserListViewModel> BuildUserListViewModel(Sorting sorting, Paging paging);
+        Task<UserListViewModel> BuildUserListViewModel(UserListViewModel? viewModel);
         Task<CreateUserViewModel> BuildCreateUserViewModel(CreateUserViewModel? viewModel = null);
         Task<ValidationResult> ValidateCreateUserViewModel(CreateUserViewModel viewModel);
         Task<EditUserViewModel> BuildEditUserViewModel(int id, EditUserViewModel? viewModel = null);
