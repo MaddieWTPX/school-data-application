@@ -149,6 +149,7 @@ namespace Services.Implementations
         public async Task<EditUserViewModel> BuildEditUserViewModel(int id, EditUserViewModel? viewModel = null)
         {
             var user = _schoolDataApplicationDbContext.Users.SingleOrDefault(u => u.UserId == id);
+            
             if (viewModel == null)
             {
                 viewModel = new EditUserViewModel { User = user };
@@ -158,7 +159,7 @@ namespace Services.Implementations
                 viewModel.UserTypeList = await _schoolDataApplicationDbContext.UserTypes.ToListAsync();
                 viewModel.SchoolList = await _schoolDataApplicationDbContext.Schools.ToListAsync();
                 viewModel.YearGroupList = await _schoolDataApplicationDbContext.YearGroups.ToListAsync();
-
+                //_mapper.Map(user, user);
                 user.UserId = viewModel.User.UserId;
                 user.FirstName = viewModel.User.FirstName;
                 user.LastName = viewModel.User.LastName;

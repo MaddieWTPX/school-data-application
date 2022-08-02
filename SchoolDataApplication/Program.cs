@@ -5,6 +5,7 @@ using Services.Validators;
 using Services.Interfaces;
 using Services.Implementations;
 using FluentValidation;
+using Services.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,7 @@ builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
 });
 
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllersWithViews().AddFluentValidation(options =>
 {

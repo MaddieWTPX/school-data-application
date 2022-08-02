@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Models.Entities;
+using Models.ViewModels;
 
 namespace Services.Mappers
 {
@@ -12,7 +13,7 @@ namespace Services.Mappers
     {
         public UserProfile()
         {
-            CreateMap<User, User>().ReverseMap();
+            CreateMap<User, User>();
         }
     }
 }
